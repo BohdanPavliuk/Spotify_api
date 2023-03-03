@@ -8,6 +8,7 @@ import json
 
 
 def get_token():
+    """Function get spotify token"""
     auth_string = client_id + ':' + client_secret
     auth_bytes = auth_string.encode('utf-8')
     auth_base64 = str(base64.b64encode(auth_bytes), 'utf-8')
@@ -27,6 +28,7 @@ def get_auth_header(token):
     return {"Authorization": "Bearer " + token}
 
 def search_for_artist(token, artist_name):
+    """Function search for author by phrase"""
     url = 'https://api.spotify.com/v1/search'
     headers = get_auth_header(token)
     query = f"?q={artist_name}&type=artist&limit=1"
@@ -41,6 +43,7 @@ def search_for_artist(token, artist_name):
     return json_result[0]
 
 def get_song_by_artist(token, artist_id):
+    """Get top songs of author"""
     url = f"https://api.spotify.com/v1/artists/{artist_id}/top-tracks?country=UA"
     headers = get_auth_header(token)
     result = requests.get(url, headers=headers)
@@ -48,6 +51,7 @@ def get_song_by_artist(token, artist_id):
     return json_result
 
 def get_information_song(token, song_id):
+    """Function get information of song"""
     url = f"https://api.spotify.com/v1/tracks/{song_id}"
     headers = get_auth_header(token)
     result = requests.get(url, headers=headers)
